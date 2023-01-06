@@ -1,21 +1,25 @@
 {% extends 'base.html' %}
 
 {# TODO: Replace EVENT NAME with the event's name #}
-{% block title %}Event Details | EVENT NAME{% endblock %}
+{% block title %}Event Details | {{ data["name"] }}{% endblock %}
 
 {% block content %}
 <div class="container">
   <div class="row">
     <div class="col">
       {# TODO: Replace EVENT NAME with the event's name #}
-      <h2>EVENT NAME</h2>
+      <h2>{{ data['name'] }}</h2>
 
       {#
         TODO: Replace THIS PAGE IS FOR FURTHER STUDY with
         event's description
       #}
       <p>
-        THIS PAGE IS FOR FURTHER STUDY.
+        {% if 'description' in data %}
+          {{ data['description'] }}
+        {% else %}
+          No description available.
+        {% endif %}
       </p>
     </div>
   </div>
@@ -26,14 +30,14 @@
         TODO: Replace EVENT IMAGE URL with actual URL to one of the
         event images
       #}
-      <img src="EVENT IMAGE URL">
+      <img src={{ data["images"][4]["url"] }}>
 
       <p>
         {#
           TODO: Replace EVENT TICKETMASTER URL with URL to event's
           Ticketmaster page
         #}
-        <a href="EVENT TICKETMASTER URL" target="_blank">
+        <a href={{ data["url"] }} target="_blank">
           Go to Ticketmaster page
         </a>
       </p>

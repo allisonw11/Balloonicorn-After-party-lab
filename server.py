@@ -63,16 +63,11 @@ def find_afterparties():
 
     res = requests.get(url, params=payload)
     data = res.json()
+    events = data['_embedded']['events']
 
     # data = {'Test': ['This is just some test data'],
     #         'page': {'totalElements': 1}}
-    events = []
-
-    for i in range(data):
-        events.append(events[i]['name'])
-        
-
-
+    
 
     return render_template('search-results.html',
                            pformat=pformat,
@@ -91,7 +86,23 @@ def get_event_details(id):
 
     # TODO: Finish implementing this view function
 
-    return render_template('event-details.html')
+    url = f'https://app.ticketmaster.com/discovery/v2/events/{id}'
+    id_payload = {
+        'apikey' : API_KEY,
+    }
+    
+    res = requests.get(url, params=id_payload)
+    data = res.json()
+    # print(data)
+    if '_embedded' in data:
+        event = data['_embedded']['venues']
+    else:
+        event = []
+    # print(event)
+    # print(event['name'])
+    
+    
+    return render_template('event-details.html', pformat=pformat, data=data, event=event)
 
 
 if __name__ == '__main__':
